@@ -15,7 +15,7 @@ load_dotenv()
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 
 # DISCORD GUILD FROM .ENV FILE.
-DISCORD_GUILD = os.getenv('DISCORD_GUILD')
+# DISCORD_GUILD = os.getenv('DISCORD_GUILD')
 
 # RANDOM NUMBER GENERATOR
 from random import randint
@@ -89,14 +89,16 @@ class aclient(discord.Client):
     async def on_ready(self):
         await self.wait_until_ready()
         if not self.synced:
-            await tree.sync(guild = discord.Object(id = DISCORD_GUILD))
+            #await tree.sync(guild = discord.Object(id = DISCORD_GUILD))
+            await tree.sync()
             self.Synced = True
         print(f"{self.user} has logged in.")
 
 client = aclient()
 tree = app_commands.CommandTree(client)
 
-@tree.command(name = "rd", description = "Ruffians Dice", guild = discord.Object(id = DISCORD_GUILD))
+#@tree.command(name = "rd", description = "Ruffians Dice", guild = discord.Object(id = DISCORD_GUILD))
+@tree.command(name = "rd", description = "Ruffians Dice")
 async def self(interaction: discord.Interaction, base: int, push: int):
     await interaction.response.send_message(dice_results(base, push))
 
